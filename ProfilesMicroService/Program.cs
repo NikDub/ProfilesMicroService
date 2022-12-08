@@ -1,5 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using ProfilesMicroService.Infrastructure;
+using ProfilesMicroService.Api.Extensions;
 
 namespace ProfilesMicroService
 {
@@ -9,11 +8,10 @@ namespace ProfilesMicroService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<ApplicationDBContext>(options =>
-            {
-                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                    assembly => assembly.MigrationsAssembly("ProfilesMicroService.Api"));
-            });
+            builder.Services.ConfigureJWTAuthentication(builder.Configuration);
+            builder.Services.ConfigureDbConnection(builder.Configuration);
+            builder.Services.ConfigureServices();
+            builder.Services.ConfigureSwagger();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -29,6 +27,7 @@ namespace ProfilesMicroService
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

@@ -17,6 +17,11 @@ namespace ProfilesMicroService.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Receptionist>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+            builder.Entity<Doctor>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+            builder.Entity<Status>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+            builder.Entity<Patient>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+
             ConfigureTables(builder);
         }
 
@@ -24,5 +29,7 @@ namespace ProfilesMicroService.Infrastructure
         {
             builder.ApplyConfiguration(new StatusConfiguration());
         }
+
+
     }
 }

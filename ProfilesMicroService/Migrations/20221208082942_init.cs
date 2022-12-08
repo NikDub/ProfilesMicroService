@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -17,7 +16,7 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     AccountPhoneNumber = table.Column<string>(type: "text", nullable: true),
                     AccountId = table.Column<string>(type: "text", nullable: true),
@@ -34,7 +33,7 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Receptionists",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     OfficeId = table.Column<string>(type: "text", nullable: true),
                     AccountId = table.Column<string>(type: "text", nullable: true),
                     FirstName = table.Column<string>(type: "text", nullable: true),
@@ -50,7 +49,7 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Statuss",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -62,7 +61,7 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Doctors",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     StatusId = table.Column<string>(type: "text", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CareerStartYear = table.Column<int>(type: "integer", nullable: false),

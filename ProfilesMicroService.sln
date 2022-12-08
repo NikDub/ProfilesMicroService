@@ -5,11 +5,11 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesMicroService.Api", "ProfilesMicroService\ProfilesMicroService.Api.csproj", "{E59EDD8E-4136-4F11-81EA-C622758843A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilesMicroService.Infrastructure", "ProfilesMicroService.Infrastructure\ProfilesMicroService.Infrastructure.csproj", "{6AF9EC97-075A-4630-B1F3-87B5AE7C7C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesMicroService.Infrastructure", "ProfilesMicroService.Infrastructure\ProfilesMicroService.Infrastructure.csproj", "{6AF9EC97-075A-4630-B1F3-87B5AE7C7C6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilesMicroService.Domain", "ProfilesMicroService.Domain\ProfilesMicroService.Domain.csproj", "{76E5157F-8963-47DD-B333-1C405ED79248}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesMicroService.Domain", "ProfilesMicroService.Domain\ProfilesMicroService.Domain.csproj", "{76E5157F-8963-47DD-B333-1C405ED79248}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilesMicroService.Application", "ProfilesMicroService.Application\ProfilesMicroService.Application.csproj", "{101BDBB9-C1C4-42C1-8FDE-B181DDC24BAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesMicroService.Application", "ProfilesMicroService.Application\ProfilesMicroService.Application.csproj", "{101BDBB9-C1C4-42C1-8FDE-B181DDC24BAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

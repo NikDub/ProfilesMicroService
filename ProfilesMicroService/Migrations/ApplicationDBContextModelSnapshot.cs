@@ -25,7 +25,9 @@ namespace ProfilesMicroService.Api.Migrations
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Doctor", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<string>("AccountId")
                         .HasColumnType("text");
@@ -70,7 +72,9 @@ namespace ProfilesMicroService.Api.Migrations
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Patient", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<string>("AccountId")
                         .HasColumnType("text");
@@ -98,7 +102,9 @@ namespace ProfilesMicroService.Api.Migrations
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Receptionist", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<string>("AccountId")
                         .HasColumnType("text");
@@ -123,7 +129,9 @@ namespace ProfilesMicroService.Api.Migrations
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Status", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

@@ -9,4 +9,12 @@
     <Folder Include="Services\Abstractions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProfilesMicroService.Infrastructure\ProfilesMicroService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
