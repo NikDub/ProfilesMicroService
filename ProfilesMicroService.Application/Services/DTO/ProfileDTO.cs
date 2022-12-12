@@ -1,4 +1,4 @@
-﻿namespace ProfilesMicroService.Application.Services
+﻿namespace ProfilesMicroService.Application.Services.DTO
 {
     public class ProfileDTO
     {

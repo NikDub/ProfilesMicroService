@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProfilesMicroService.Application.Services;
 using ProfilesMicroService.Application.Services.Abstractions;
+using ProfilesMicroService.Application.Services.DTO;
 
 namespace ProfilesMicroService.Api.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("[controller]")]
     public class ProfileController : Controller
     {
-        private readonly IProfileService _profileService;
-        public ProfileController(IProfileService profileService)
+        private readonly IReceptionistService _profileService;
+
+        public ProfileController(IReceptionistService profileService)
         {
             _profileService = profileService;
         }

@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProfilesMicroService.Application.Services.Abstractions;
+using ProfilesMicroService.Application.Services.DTO;
 using ProfilesMicroService.Domain.Entities.Models;
 using ProfilesMicroService.Infrastructure;
 
 namespace ProfilesMicroService.Application.Services
 {
-    public class ProfileService : IProfileService
+    public class ProfileService : IReceptionistService
     {
         private readonly ApplicationDBContext _db;
         private readonly IMapper _mapper;

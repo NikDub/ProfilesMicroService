@@ -18,9 +18,25 @@ namespace ProfilesMicroService.Infrastructure
         {
             base.OnModelCreating(builder);
             builder.Entity<Receptionist>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+            builder.Entity<Receptionist>().Property(e => e.OfficeId).IsRequired();
+            builder.Entity<Receptionist>().Property(e => e.FirstName).IsRequired();
+            builder.Entity<Receptionist>().Property(e => e.LastName).IsRequired();
+
             builder.Entity<Doctor>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
-            builder.Entity<Status>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+            builder.Entity<Doctor>().Property(e => e.OfficeId).IsRequired();
+            builder.Entity<Doctor>().Property(e => e.FirstName).IsRequired();
+            builder.Entity<Doctor>().Property(e => e.LastName).IsRequired();
+            builder.Entity<Doctor>().Property(e => e.StatusId).IsRequired();
+            builder.Entity<Doctor>().Property(e => e.CareerStartYear).IsRequired();
+            builder.Entity<Doctor>().Property(e => e.SpecializationId).IsRequired();
+            builder.Entity<Doctor>().Property(e => e.DateOfBirth).IsRequired();
+
             builder.Entity<Patient>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+            builder.Entity<Patient>().Property(e => e.FirstName).IsRequired();
+            builder.Entity<Patient>().Property(e => e.LastName).IsRequired();
+            builder.Entity<Patient>().Property(e => e.DateOfBirth).IsRequired();
+
+            builder.Entity<Status>().Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
 
             ConfigureTables(builder);
         }

@@ -1,8 +1,9 @@
-﻿using ProfilesMicroService.Domain.Entities.Models;
+﻿using ProfilesMicroService.Application.Services.DTO;
+using ProfilesMicroService.Domain.Entities.Models;
 
 namespace ProfilesMicroService.Application.Services.Abstractions
 {
-    public interface IProfileService
+    public interface IReceptionistService
     {
         Task<Receptionist> CreateAsync(ProfileDTO model);
         Task<bool> DeleteAsync(string id);

@@ -1,4 +1,6 @@
-﻿namespace ProfilesMicroService.Domain.Entities.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProfilesMicroService.Domain.Entities.Models
 {
     public class Doctor : BaseProfile
     {

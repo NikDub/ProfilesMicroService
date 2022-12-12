@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -33,8 +34,9 @@ namespace ProfilesMicroService.Api.Extensions
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IReceptionistService, ProfileService>();
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddMediatR(typeof(Program));
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)

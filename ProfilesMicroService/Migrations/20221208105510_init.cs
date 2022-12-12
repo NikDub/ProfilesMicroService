@@ -20,8 +20,8 @@ namespace ProfilesMicroService.Api.Migrations
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     AccountPhoneNumber = table.Column<string>(type: "text", nullable: true),
                     AccountId = table.Column<string>(type: "text", nullable: true),
-                    FirstName = table.Column<string>(type: "text", nullable: true),
-                    LastName = table.Column<string>(type: "text", nullable: true),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -34,10 +34,10 @@ namespace ProfilesMicroService.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    OfficeId = table.Column<string>(type: "text", nullable: true),
+                    OfficeId = table.Column<string>(type: "text", nullable: false),
                     AccountId = table.Column<string>(type: "text", nullable: true),
-                    FirstName = table.Column<string>(type: "text", nullable: true),
-                    LastName = table.Column<string>(type: "text", nullable: true),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -62,16 +62,16 @@ namespace ProfilesMicroService.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    StatusId = table.Column<string>(type: "text", nullable: true),
+                    StatusId = table.Column<string>(type: "text", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CareerStartYear = table.Column<int>(type: "integer", nullable: false),
                     AccountPhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    SpecializationId = table.Column<string>(type: "text", nullable: true),
+                    SpecializationId = table.Column<string>(type: "text", nullable: false),
                     SpecializationName = table.Column<string>(type: "text", nullable: true),
-                    OfficeId = table.Column<string>(type: "text", nullable: true),
+                    OfficeId = table.Column<string>(type: "text", nullable: false),
                     AccountId = table.Column<string>(type: "text", nullable: true),
-                    FirstName = table.Column<string>(type: "text", nullable: true),
-                    LastName = table.Column<string>(type: "text", nullable: true),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -81,7 +81,8 @@ namespace ProfilesMicroService.Api.Migrations
                         name: "FK_Doctors_Statuss_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Statuss",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
