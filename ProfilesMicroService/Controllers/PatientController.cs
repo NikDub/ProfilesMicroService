@@ -26,7 +26,13 @@ namespace ProfilesMicroService.Api.Controllers
         public async Task<IActionResult> GetProfile()
         {
             var AccountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (AccountId == null)
+                return BadRequest();
+
             var value = await _mediator.Send(new GetPatientByAccountIdQuery(AccountId));
+            if (value == null)
+                return NotFound();
+
             return Ok(value);
         }
 
@@ -34,8 +40,8 @@ namespace ProfilesMicroService.Api.Controllers
         [HttpPost("profile/check")]
         public async Task<IActionResult> GetProfileWithoutAccount([FromBody] PatientForCreateDTO model)
         {
-            await _mediator.Send(new GetPatientWithoutAccountQuery(model));
-            return Created("", null);
+            var patientList = await _mediator.Send(new GetPatientWithoutAccountQuery(model));
+            return Ok(patientList);
         }
 
         [Authorize(Roles = nameof(UserRole.Patient))]
@@ -43,6 +49,9 @@ namespace ProfilesMicroService.Api.Controllers
         public async Task<IActionResult> CreateProfileByPatient([FromBody] PatientForCreateDTO model)
         {
             var AccountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (AccountId == null)
+                return BadRequest();
+
             await _mediator.Send(new AddPatientByPatientCommand(AccountId, model));
             return Created("", null);
         }
@@ -54,7 +63,9 @@ namespace ProfilesMicroService.Api.Controllers
         public async Task<IActionResult> Put(string id, [FromBody] PatientForUpdateDTO model)
         {
             var result = await _mediator.Send(new UpdatePatientCommand(id, model));
-            return Ok(result);
+            if (result == null)
+                return NotFound();
+            return NoContent();
         }
 
         [Authorize(Roles = nameof(UserRole.Receptionist))]
@@ -69,7 +80,10 @@ namespace ProfilesMicroService.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PatientForCreateDTO model)
         {
-            await _mediator.Send(new AddPatientByReceptionistCommand(model));
+            var patient = await _mediator.Send(new AddPatientByReceptionistCommand(model));
+            if (patient == null)
+                return BadRequest();
+
             return Created("", null);
         }
 
@@ -79,7 +93,7 @@ namespace ProfilesMicroService.Api.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             await _mediator.Send(new DeletePatientCommand(id));
-            return Ok();
+            return NoContent();
         }
 
 
@@ -89,6 +103,8 @@ namespace ProfilesMicroService.Api.Controllers
         public async Task<IActionResult> Get(string id)
         {
             var value = await _mediator.Send(new GetPatientByIdQuery(id));
+            if (value == null)
+                return NotFound();
             return Ok(value);
         }
     }

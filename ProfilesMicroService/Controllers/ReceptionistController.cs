@@ -20,7 +20,10 @@ namespace ProfilesMicroService.Api.Controllers
         public async Task<IActionResult> Create([FromBody] ReceptionistForCreateDTO model)
         {
             var profile = await _profileService.CreateAsync(model);
-            return Ok(profile);
+            if (profile == null)
+                return BadRequest();
+
+            return Created("", profile);
         }
 
         [HttpGet]
@@ -33,22 +36,28 @@ namespace ProfilesMicroService.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var profile = await _profileService.GetAsync(id);
+            var profile = await _profileService.GetByIdAsync(id);
+            if(profile == null)
+                return NotFound();
+
             return Ok(profile);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] ReceptionistForUpdateDTO model)
         {
-            var profile = await _profileService.EditAsync(id, model);
-            return Ok(profile);
+            var profile = await _profileService.UpdateAsync(id, model);
+            if (profile == null)
+                return NotFound();
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             await _profileService.DeleteAsync(id);
-            return Ok();
+            return NoContent();
         }
     }
 }

@@ -2,7 +2,6 @@
 using MediatR;
 using ProfilesMicroService.Application.DTO.Patient;
 using ProfilesMicroService.Application.Services.Abstractions;
-using ProfilesMicroService.Domain.Entities.Models;
 
 namespace ProfilesMicroService.Application.Services.CQRS.Queries
 {

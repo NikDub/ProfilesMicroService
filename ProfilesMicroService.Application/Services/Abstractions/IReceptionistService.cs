@@ -1,5 +1,4 @@
 ﻿using ProfilesMicroService.Application.DTO.Receptionist;
-using ProfilesMicroService.Domain.Entities.Models;
 
 namespace ProfilesMicroService.Application.Services.Abstractions
 {
@@ -7,8 +6,8 @@ namespace ProfilesMicroService.Application.Services.Abstractions
     {
         Task<ReceptionistDTO> CreateAsync(ReceptionistForCreateDTO model);
         Task<bool> DeleteAsync(string id);
-        Task<ReceptionistDTO> EditAsync(string id, ReceptionistForUpdateDTO model);
+        Task<ReceptionistDTO> UpdateAsync(string id, ReceptionistForUpdateDTO model);
         Task<List<ReceptionistDTO>> GetAsync();
-        Task<ReceptionistDTO> GetAsync(string id);
+        Task<ReceptionistDTO> GetByIdAsync(string id);
     }
 }

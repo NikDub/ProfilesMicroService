@@ -16,6 +16,10 @@ namespace ProfilesMicroService.Api.Extensions
             CreateMap<PatientDTO, Patient>().ReverseMap();
             CreateMap<PatientForCreateDTO, Patient>().ReverseMap();
             CreateMap<PatientForUpdateDTO, Patient>().ReverseMap();
+
+            CreateMap<DoctorDTO, Doctor>().ReverseMap();
+            CreateMap<DoctorForCreateDTO, Doctor>().ReverseMap();
+            CreateMap<DoctorForUpdateDTO, Doctor>().ReverseMap();
         }
     }
 }

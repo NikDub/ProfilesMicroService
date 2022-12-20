@@ -41,7 +41,7 @@ namespace ProfilesMicroService.Application.Services
             return true;
         }
 
-        public async Task<ReceptionistDTO> EditAsync(string id, ReceptionistForUpdateDTO model)
+        public async Task<ReceptionistDTO> UpdateAsync(string id, ReceptionistForUpdateDTO model)
         {
             if (model == null)
                 return null;
@@ -57,6 +57,6 @@ namespace ProfilesMicroService.Application.Services
 
         public async Task<List<ReceptionistDTO>> GetAsync() => _mapper.Map<List<ReceptionistDTO>>(await _db.Receptionists.ToListAsync());
 
-        public async Task<ReceptionistDTO> GetAsync(string id) => _mapper.Map<ReceptionistDTO>(await _db.Receptionists.FirstOrDefaultAsync(e => e.Id == id));
+        public async Task<ReceptionistDTO> GetByIdAsync(string id) => _mapper.Map<ReceptionistDTO>(await _db.Receptionists.FirstOrDefaultAsync(e => e.Id == id));
     }
 }
