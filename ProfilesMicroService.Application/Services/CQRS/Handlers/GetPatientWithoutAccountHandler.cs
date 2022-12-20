@@ -21,24 +21,28 @@ namespace ProfilesMicroService.Application.Services.CQRS.Handlers
         public async Task<IEnumerable<PatientDTO>> Handle(GetPatientWithoutAccountQuery request, CancellationToken cancellationToken)
         {
             var patientAll = await _repository.GetAllAsync();
-            var patientList = new List<Patient>();
-            foreach (var patient in patientAll.Where(r=>!r.isLinkedToAccount))
-            {
-                int countCoefficient = 0;
-                if (patient.FirstName.ToLower().Equals(request.parient.FirstName.ToLower()))
-                    countCoefficient += 5;
-                if (patient.LastName.ToLower().Equals(request.parient.LastName.ToLower()))
-                    countCoefficient += 5;
-                if (patient.MiddleName.ToLower().Equals(request.parient.MiddleName.ToLower()))
-                    countCoefficient += 5;
-                if (patient.DateOfBirth.Equals(request.parient.DateOfBirth))
-                    countCoefficient += 3;
-
-                if (countCoefficient >= 13)
-                    patientList.Add(patient);
-            }
+            var patientList = patientAll.Where(r => !r.isLinkedToAccount)
+                .Select(patient => isMatchPatient(patient, request.parient) ? patient : null);
 
             return _mapper.Map<List<PatientDTO>>(patientList);
+        }
+
+        private bool isMatchPatient(Patient patient, PatientForCreateDTO requestPatient)
+        {
+            int countCoefficient = 0;
+            if (patient.FirstName.ToLower().Equals(requestPatient.FirstName.ToLower()))
+                countCoefficient += 5;
+            if (patient.LastName.ToLower().Equals(requestPatient.LastName.ToLower()))
+                countCoefficient += 5;
+            if (patient.MiddleName.ToLower().Equals(requestPatient.MiddleName.ToLower()))
+                countCoefficient += 5;
+            if (patient.DateOfBirth.Equals(requestPatient.DateOfBirth))
+                countCoefficient += 3;
+
+            if (countCoefficient >= 13)
+                return true;
+
+            return false;
         }
     }
 }
