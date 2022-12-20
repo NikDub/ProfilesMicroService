@@ -4,5 +4,6 @@
     {
         public DateTime DateOfBirth { get; set; }
         public string AccountPhoneNumber { get; set; }
+        public bool isLinkedToAccount { get; set; } = false;
     }
 }

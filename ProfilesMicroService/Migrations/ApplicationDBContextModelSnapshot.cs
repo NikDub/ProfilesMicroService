@@ -42,24 +42,29 @@ namespace ProfilesMicroService.Api.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
                     b.Property<string>("OfficeId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SpecializationId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SpecializationName")
                         .HasColumnType("text");
 
                     b.Property<string>("StatusId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -86,9 +91,11 @@ namespace ProfilesMicroService.Api.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
@@ -110,15 +117,18 @@ namespace ProfilesMicroService.Api.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
                     b.Property<string>("OfficeId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -182,7 +192,9 @@ namespace ProfilesMicroService.Api.Migrations
                 {
                     b.HasOne("ProfilesMicroService.Domain.Entities.Models.Status", "Status")
                         .WithMany("Doctors")
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Status");
                 });

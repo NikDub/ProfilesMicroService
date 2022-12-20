@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProfilesMicroService.Application.Services.Abstractions;
+using ProfilesMicroService.Application.Services.DTO.Profile;
 using ProfilesMicroService.Domain.Entities.Models;
 using ProfilesMicroService.Infrastructure;
 
 namespace ProfilesMicroService.Application.Services
 {
-    public class ProfileService : IProfileService
+    public class ProfileService : IReceptionistService
     {
         private readonly ApplicationDBContext _db;
         private readonly IMapper _mapper;
@@ -17,12 +18,15 @@ namespace ProfilesMicroService.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<Receptionist> CreateAsync(ProfileDTO model)
+        public async Task<ReceptionistDTO> CreateAsync(ReceptionistForCreateDTO model)
         {
+            if (model == null)
+                return null;
+
             var receptionistMap = _mapper.Map<Receptionist>(model);
             _db.Receptionists.Add(receptionistMap);
             await _db.SaveChangesAsync();
-            return receptionistMap;
+            return _mapper.Map<ReceptionistDTO>(receptionistMap);
         }
 
         public async Task<bool> DeleteAsync(string id)
@@ -37,28 +41,22 @@ namespace ProfilesMicroService.Application.Services
             return true;
         }
 
-        public async Task<Receptionist> EditAsync(string id, ProfileDTO model)
+        public async Task<ReceptionistDTO> EditAsync(string id, ReceptionistForUpdateDTO model)
         {
+            if (model == null)
+                return null;
+
             var reseptionist = _db.Receptionists.FirstOrDefault(e => e.Id == id);
             if (reseptionist == null)
                 return null;
 
-            reseptionist.OfficeId = model.OfficeId;
-            reseptionist.FirstName = model.FirstName;
-            reseptionist.LastName = model.LastName;
-            reseptionist.MiddleName = model.MiddleName;
+            _mapper.Map(model, reseptionist);
             await _db.SaveChangesAsync();
-            return reseptionist;
+            return _mapper.Map<ReceptionistDTO>(reseptionist);
         }
 
-        public async Task<List<Receptionist>> GetAsync()
-        {
-            return await _db.Receptionists.ToListAsync();
-        }
+        public async Task<List<ReceptionistDTO>> GetAsync() => _mapper.Map<List<ReceptionistDTO>>(await _db.Receptionists.ToListAsync());
 
-        public async Task<Receptionist> GetAsync(string id)
-        {
-            return await _db.Receptionists.FirstOrDefaultAsync(e => e.Id == id);
-        }
+        public async Task<ReceptionistDTO> GetAsync(string id) => _mapper.Map<ReceptionistDTO>(await _db.Receptionists.FirstOrDefaultAsync(e => e.Id == id));
     }
 }
