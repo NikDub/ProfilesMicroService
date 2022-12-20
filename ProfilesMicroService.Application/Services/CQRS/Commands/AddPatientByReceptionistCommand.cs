@@ -4,5 +4,5 @@ using ProfilesMicroService.Domain.Entities.Models;
 
 namespace ProfilesMicroService.Application.Services.CQRS.Commands
 {
-    public record UpdatePatientCommand(string id,PatientForUpdateDTO patient) : IRequest<PatientDTO>;
+    public record AddPatientByReceptionistCommand(PatientForCreateDTO patient) : IRequest<PatientDTO>;
 }

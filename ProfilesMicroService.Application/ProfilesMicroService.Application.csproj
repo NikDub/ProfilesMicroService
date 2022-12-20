@@ -15,4 +15,8 @@
     <ProjectReference Include="..\ProfilesMicroService.Infrastructure\ProfilesMicroService.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\DTO\Doctor\" />
+  </ItemGroup>
+
 </Project>

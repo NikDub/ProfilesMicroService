@@ -16,11 +16,15 @@ namespace ProfilesMicroService.Api.Extensions
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                    {
-                       options.Authority = configuration.GetValue<string>("Routes:AuthorityRoute");
-                       options.Audience = "TestsAPI";
+                       options.Authority = configuration.GetValue<string>("Routes:AuthorityRoute") ?? throw new NotImplementedException();
+                       options.Audience = configuration.GetValue<string>("Routes:Scopes") ?? throw new NotImplementedException();
                        options.TokenValidationParameters = new TokenValidationParameters
                        {
-                           ValidateAudience = false
+                           ValidateAudience = true,
+                           ValidAudience = configuration.GetValue<string>("Routes:Scopes") ?? throw new NotImplementedException(),
+                           ValidateIssuer = true,
+                           ValidIssuer = configuration.GetValue<string>("Routes:AuthorityRoute") ?? throw new NotImplementedException(),
+                           ValidateLifetime = true
                        };
                    });
         }

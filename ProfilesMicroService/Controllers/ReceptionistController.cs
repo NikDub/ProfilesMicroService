@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IdentityMicroService.Domain.Entities.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProfilesMicroService.Application.Services.Abstractions;
-using ProfilesMicroService.Application.Services.DTO;
+using ProfilesMicroService.Application.Services.DTO.Profile;
 
 namespace ProfilesMicroService.Api.Controllers
 {
+    [Authorize(Roles = nameof(UserRole.Receptionist))]
     [Route("[controller]")]
     public class ProfileController : Controller
     {
         private readonly IReceptionistService _profileService;
-
         public ProfileController(IReceptionistService profileService)
         {
             _profileService = profileService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProfileDTO model)
+        public async Task<IActionResult> Create([FromBody] ReceptionistForCreateDTO model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             var profile = await _profileService.CreateAsync(model);
             return Ok(profile);
         }
@@ -39,7 +38,7 @@ namespace ProfilesMicroService.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, ProfileDTO model)
+        public async Task<IActionResult> Update(string id, [FromBody] ReceptionistForUpdateDTO model)
         {
             var profile = await _profileService.EditAsync(id, model);
             return Ok(profile);
