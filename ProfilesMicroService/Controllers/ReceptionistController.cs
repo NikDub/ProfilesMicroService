@@ -1,8 +1,8 @@
 ﻿using IdentityMicroService.Domain.Entities.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProfilesMicroService.Application.DTO.Receptionist;
 using ProfilesMicroService.Application.Services.Abstractions;
-using ProfilesMicroService.Application.Services.DTO.Profile;
 
 namespace ProfilesMicroService.Api.Controllers
 {

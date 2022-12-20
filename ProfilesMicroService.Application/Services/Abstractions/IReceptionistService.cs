@@ -1,4 +1,4 @@
-﻿using ProfilesMicroService.Application.Services.DTO.Profile;
+﻿using ProfilesMicroService.Application.DTO.Receptionist;
 using ProfilesMicroService.Domain.Entities.Models;
 
 namespace ProfilesMicroService.Application.Services.Abstractions

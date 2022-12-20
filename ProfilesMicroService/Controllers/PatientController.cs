@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProfilesMicroService.Application.DTO.Patient;
 using ProfilesMicroService.Application.Services.CQRS.Commands;
 using ProfilesMicroService.Application.Services.CQRS.Queries;
-using ProfilesMicroService.Application.Services.DTO;
 using System.Security.Claims;
 
 namespace ProfilesMicroService.Api.Controllers

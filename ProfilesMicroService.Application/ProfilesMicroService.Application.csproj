@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\DTO\Doctor\" />
+    <Folder Include="DTO\Doctor\" />
   </ItemGroup>
 
 </Project>

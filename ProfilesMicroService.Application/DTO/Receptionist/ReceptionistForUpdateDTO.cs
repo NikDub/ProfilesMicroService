@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProfilesMicroService.Application.Services.DTO.Profile
+namespace ProfilesMicroService.Application.DTO.Receptionist
 {
     public class ReceptionistForUpdateDTO
     {

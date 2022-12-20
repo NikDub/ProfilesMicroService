@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ProfilesMicroService.Application.Services.DTO;
-using ProfilesMicroService.Application.Services.DTO.Profile;
+using ProfilesMicroService.Application.DTO.Patient;
+using ProfilesMicroService.Application.DTO.Receptionist;
 using ProfilesMicroService.Domain.Entities.Models;
 
 namespace ProfilesMicroService.Api.Extensions

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProfilesMicroService.Application.Services.DTO
+namespace ProfilesMicroService.Application.DTO.Patient
 {
     public class PatientForUpdateDTO
     {

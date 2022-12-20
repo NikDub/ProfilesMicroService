@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ProfilesMicroService.Application.Services.DTO;
+using ProfilesMicroService.Application.DTO.Patient;
 
 namespace ProfilesMicroService.Application.Services.CQRS.Queries
 {

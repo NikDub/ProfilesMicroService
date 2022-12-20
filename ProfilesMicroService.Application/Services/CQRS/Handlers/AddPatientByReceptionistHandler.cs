@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
+using ProfilesMicroService.Application.DTO.Patient;
 using ProfilesMicroService.Application.Services.Abstractions;
 using ProfilesMicroService.Application.Services.CQRS.Commands;
-using ProfilesMicroService.Application.Services.DTO;
 using ProfilesMicroService.Domain.Entities.Models;
 
 namespace ProfilesMicroService.Application.Services.CQRS.Handlers
