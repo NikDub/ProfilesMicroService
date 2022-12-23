@@ -21,8 +21,8 @@ namespace ProfilesMicroService.Api.Controllers
         }
 
 
-        [Authorize(Roles = nameof(UserRole.Patient))]
         [HttpGet("profile")]
+        [Authorize(Roles = nameof(UserRole.Patient))]
         public async Task<IActionResult> GetProfile()
         {
             var AccountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -36,16 +36,16 @@ namespace ProfilesMicroService.Api.Controllers
             return Ok(value);
         }
 
-        [Authorize(Roles = nameof(UserRole.Patient))]
         [HttpPost("profile/check")]
+        [Authorize(Roles = nameof(UserRole.Patient))]
         public async Task<IActionResult> GetProfileWithoutAccount([FromBody] PatientForCreateDTO model)
         {
             var patientList = await _mediator.Send(new GetPatientWithoutAccountQuery(model));
             return Ok(patientList);
         }
 
-        [Authorize(Roles = nameof(UserRole.Patient))]
         [HttpPost("profile")]
+        [Authorize(Roles = nameof(UserRole.Patient))]
         public async Task<IActionResult> CreateProfileByPatient([FromBody] PatientForCreateDTO model)
         {
             var AccountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -57,9 +57,8 @@ namespace ProfilesMicroService.Api.Controllers
         }
 
 
-        [Authorize(Roles = nameof(UserRole.Patient))]
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
         [HttpPut("{id}")]
+        [Authorize(Roles = $"{nameof(UserRole.Patient)},{nameof(UserRole.Receptionist)}")]
         public async Task<IActionResult> Put(string id, [FromBody] PatientForUpdateDTO model)
         {
             var result = await _mediator.Send(new UpdatePatientCommand(id, model));
@@ -68,16 +67,16 @@ namespace ProfilesMicroService.Api.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
         [HttpGet]
+        [Authorize(Roles = nameof(UserRole.Receptionist))]
         public async Task<IActionResult> Get()
         {
             var value = await _mediator.Send(new GetPatientQuery());
             return Ok(value);
         }
 
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
         [HttpPost]
+        [Authorize(Roles = nameof(UserRole.Receptionist))]
         public async Task<IActionResult> Post([FromBody] PatientForCreateDTO model)
         {
             var patient = await _mediator.Send(new AddPatientByReceptionistCommand(model));
@@ -88,8 +87,8 @@ namespace ProfilesMicroService.Api.Controllers
         }
 
 
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
         [HttpDelete("{id}")]
+        [Authorize(Roles = nameof(UserRole.Receptionist))]
         public async Task<IActionResult> Delete(string id)
         {
             await _mediator.Send(new DeletePatientCommand(id));
@@ -97,9 +96,8 @@ namespace ProfilesMicroService.Api.Controllers
         }
 
 
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
-        [Authorize(Roles = nameof(UserRole.Doctor))]
         [HttpGet("{id}")]
+        [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Doctor)}")]
         public async Task<IActionResult> Get(string id)
         {
             var value = await _mediator.Send(new GetPatientByIdQuery(id));

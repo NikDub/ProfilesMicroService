@@ -39,6 +39,7 @@ namespace ProfilesMicroService.Api.Extensions
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<IReceptionistService, ProfileService>();
+            services.AddScoped<IDoctorService, DoctorService>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(typeof(Program));
         }

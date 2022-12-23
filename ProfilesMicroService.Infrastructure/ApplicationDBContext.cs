@@ -45,7 +45,5 @@ namespace ProfilesMicroService.Infrastructure
         {
             builder.ApplyConfiguration(new StatusConfiguration());
         }
-
-
     }
 }

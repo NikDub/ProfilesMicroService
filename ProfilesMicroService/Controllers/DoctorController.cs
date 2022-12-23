@@ -24,10 +24,8 @@ namespace ProfilesMicroService.Api.Controllers
             return Ok(doctorList);
         }
 
-        [Authorize(Roles = nameof(UserRole.Patient))]
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
-        [Authorize(Roles = nameof(UserRole.Doctor))]
         [HttpGet("{id}")]
+        [Authorize(Roles = $"{nameof(UserRole.Patient)},{nameof(UserRole.Receptionist)},{nameof(UserRole.Doctor)}")]
         public async Task<IActionResult> Get(string id)
         {
             var doctor = await _doctorService.GetByIdAsync(id);
@@ -36,8 +34,8 @@ namespace ProfilesMicroService.Api.Controllers
             return Ok(doctor);
         }
 
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
         [HttpPost]
+        [Authorize(Roles = nameof(UserRole.Receptionist))]
         public async Task<IActionResult> Create([FromBody] DoctorForCreateDTO model)
         {
             var doctor = await _doctorService.CreateAsync(model);
@@ -46,9 +44,8 @@ namespace ProfilesMicroService.Api.Controllers
             return Created("", doctor);
         }
 
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
-        [Authorize(Roles = nameof(UserRole.Doctor))]
         [HttpPut("{id}")]
+        [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Doctor)}")]
         public async Task<IActionResult> Put(string id, [FromBody] DoctorForUpdateDTO model)
         {
             var doctor = await _doctorService.UpdateAsync(id, model);
@@ -57,8 +54,8 @@ namespace ProfilesMicroService.Api.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
         [HttpPut("{id}/status/{status}")]
+        [Authorize(Roles = nameof(UserRole.Receptionist))]
         public async Task<IActionResult> PutStatus(string id, string status)
         {
             var doctor = await _doctorService.ChangeStatusAsync(id, status);
