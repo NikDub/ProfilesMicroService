@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ProfilesMicroService.Application.Services.CQRS
+namespace ProfilesMicroService.Application.CQRS
 {
     internal interface ISender
     {

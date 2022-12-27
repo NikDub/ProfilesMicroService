@@ -71,8 +71,6 @@ namespace ProfilesMicroService.Api.Extensions
                         new List<string>()
                     }
                 });
-
-                //setup.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comments.xml"));
             });
         }
 

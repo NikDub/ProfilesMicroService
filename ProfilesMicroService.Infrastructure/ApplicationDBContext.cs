@@ -10,7 +10,7 @@ namespace ProfilesMicroService.Infrastructure
         public DbSet<Receptionist> Receptionists { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
-        public DbSet<Status> Statuss { get; set; }
+        public DbSet<Status> Status { get; set; }
 
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
 

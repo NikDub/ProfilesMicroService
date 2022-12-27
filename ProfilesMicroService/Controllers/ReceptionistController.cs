@@ -21,7 +21,7 @@ namespace ProfilesMicroService.Api.Controllers
         {
             var profile = await _profileService.CreateAsync(model);
             if (profile == null)
-                return BadRequest();
+                return BadRequest("Invalid model");
 
             return Created("", profile);
         }

@@ -4,17 +4,18 @@ using ProfilesMicroService.Application.DTO.Receptionist;
 using ProfilesMicroService.Application.Services.Abstractions;
 using ProfilesMicroService.Domain.Entities.Models;
 using ProfilesMicroService.Infrastructure;
+using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.Services
 {
     public class ProfileService : IReceptionistService
     {
-        private readonly ApplicationDBContext _db;
+        private readonly IReceptionistRepository _receptionistRepository;
         private readonly IMapper _mapper;
 
-        public ProfileService(ApplicationDBContext dBContext, IMapper mapper)
+        public ProfileService(IReceptionistRepository receptionistRepository, IMapper mapper)
         {
-            _db = dBContext;
+            _receptionistRepository = receptionistRepository;
             _mapper = mapper;
         }
 
@@ -24,20 +25,18 @@ namespace ProfilesMicroService.Application.Services
                 return null;
 
             var receptionistMap = _mapper.Map<Receptionist>(model);
-            _db.Receptionists.Add(receptionistMap);
-            await _db.SaveChangesAsync();
+            await _receptionistRepository.InsertAsync(receptionistMap);
             return _mapper.Map<ReceptionistDTO>(receptionistMap);
         }
 
         public async Task<bool> DeleteAsync(string id)
         {
-            var reseptionist = await _db.Receptionists.FirstOrDefaultAsync(re => re.Id == id);
+            var reseptionist = await _receptionistRepository.GetByIdAsync(id);
 
             if (reseptionist == null)
                 return false;
 
-            _db.Receptionists.Remove(reseptionist);
-            await _db.SaveChangesAsync();
+            await _receptionistRepository.DeleteAsync(id);
             return true;
         }
 
@@ -46,17 +45,17 @@ namespace ProfilesMicroService.Application.Services
             if (model == null)
                 return null;
 
-            var reseptionist = _db.Receptionists.FirstOrDefault(e => e.Id == id);
+            var reseptionist = await _receptionistRepository.GetByIdAsync(id);
             if (reseptionist == null)
                 return null;
 
             _mapper.Map(model, reseptionist);
-            await _db.SaveChangesAsync();
+            await _receptionistRepository.SaveAsync();
             return _mapper.Map<ReceptionistDTO>(reseptionist);
         }
 
-        public async Task<List<ReceptionistDTO>> GetAsync() => _mapper.Map<List<ReceptionistDTO>>(await _db.Receptionists.ToListAsync());
+        public async Task<List<ReceptionistDTO>> GetAsync() => _mapper.Map<List<ReceptionistDTO>>(await _receptionistRepository.GetAllAsync());
 
-        public async Task<ReceptionistDTO> GetByIdAsync(string id) => _mapper.Map<ReceptionistDTO>(await _db.Receptionists.FirstOrDefaultAsync(e => e.Id == id));
+        public async Task<ReceptionistDTO> GetByIdAsync(string id) => _mapper.Map<ReceptionistDTO>(await _receptionistRepository.GetByIdAsync(id));
     }
 }

@@ -2,20 +2,20 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProfilesMicroService.Application.CQRS.Commands;
+using ProfilesMicroService.Application.CQRS.Queries;
 using ProfilesMicroService.Application.DTO.Patient;
-using ProfilesMicroService.Application.Services.CQRS.Commands;
-using ProfilesMicroService.Application.Services.CQRS.Queries;
 using System.Security.Claims;
 
 namespace ProfilesMicroService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientController : ControllerBase
+    public class PatientsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public PatientController(IMediator mediator)
+        public PatientsController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -27,7 +27,7 @@ namespace ProfilesMicroService.Api.Controllers
         {
             var AccountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (AccountId == null)
-                return BadRequest();
+                return BadRequest("You haven't account id");
 
             var value = await _mediator.Send(new GetPatientByAccountIdQuery(AccountId));
             if (value == null)
@@ -50,7 +50,7 @@ namespace ProfilesMicroService.Api.Controllers
         {
             var AccountId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (AccountId == null)
-                return BadRequest();
+                return BadRequest("You haven't account id");
 
             await _mediator.Send(new AddPatientByPatientCommand(AccountId, model));
             return Created("", null);
@@ -81,7 +81,7 @@ namespace ProfilesMicroService.Api.Controllers
         {
             var patient = await _mediator.Send(new AddPatientByReceptionistCommand(model));
             if (patient == null)
-                return BadRequest();
+                return BadRequest("Invalid model");
 
             return Created("", null);
         }

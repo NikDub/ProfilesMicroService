@@ -9,10 +9,10 @@ namespace ProfilesMicroService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DoctorController : Controller
+    public class DoctorsController : Controller
     {
         private readonly IDoctorService _doctorService;
-        public DoctorController(IDoctorService doctorService)
+        public DoctorsController(IDoctorService doctorService)
         {
             _doctorService = doctorService;
         }
@@ -40,7 +40,7 @@ namespace ProfilesMicroService.Api.Controllers
         {
             var doctor = await _doctorService.CreateAsync(model);
             if (doctor == null)
-                return BadRequest();
+                return BadRequest("Invalid model");
             return Created("", doctor);
         }
 
