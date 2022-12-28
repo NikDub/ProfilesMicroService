@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using ProfilesMicroService.Application.Services;
 using ProfilesMicroService.Application.Services.Abstractions;
 using ProfilesMicroService.Infrastructure;
+using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Api.Extensions
 {
@@ -38,10 +39,14 @@ namespace ProfilesMicroService.Api.Extensions
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IReceptionistRepository, ReceptionistRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<IReceptionistService, ProfileService>();
             services.AddScoped<IDoctorService, DoctorService>();
-            services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(typeof(Program));
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)
