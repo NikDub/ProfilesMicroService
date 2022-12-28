@@ -5,30 +5,32 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Commands
 {
-    public record UpdatePatientCommand(string Id, PatientForUpdateDTO Patient) : IRequest<PatientDTO>;
-    public class UpdatePatientHandler : IRequestHandler<UpdatePatientCommand, PatientDTO>
+    public record UpdatePatientCommand(string Id, PatientForUpdateDTO Patient) : IRequest<PatientDTO>
     {
-        private readonly IPatientRepository _repository;
-        private readonly IMapper _mapper;
-
-        public UpdatePatientHandler(IPatientRepository repository, IMapper mapper)
+        public class UpdatePatientHandler : IRequestHandler<UpdatePatientCommand, PatientDTO>
         {
-            _repository = repository;
-            _mapper = mapper;
-        }
+            private readonly IPatientRepository _repository;
+            private readonly IMapper _mapper;
 
-        public async Task<PatientDTO> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
-        {
-            if (request.Patient == null)
-                return null;
+            public UpdatePatientHandler(IPatientRepository repository, IMapper mapper)
+            {
+                _repository = repository;
+                _mapper = mapper;
+            }
 
-            var patient = await _repository.GetByIdAsync(request.Id, cancellationToken);
-            if (patient == null)
-                return null;
+            public async Task<PatientDTO> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
+            {
+                if (request.Patient == null)
+                    return null;
 
-            _mapper.Map(request.Patient, patient);
-            await _repository.UpdateAsync(patient, cancellationToken);
-            return _mapper.Map<PatientDTO>(patient);
+                var patient = await _repository.GetByIdAsync(request.Id, cancellationToken);
+                if (patient == null)
+                    return null;
+
+                _mapper.Map(request.Patient, patient);
+                await _repository.UpdateAsync(patient, cancellationToken);
+                return _mapper.Map<PatientDTO>(patient);
+            }
         }
     }
 }

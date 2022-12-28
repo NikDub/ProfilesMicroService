@@ -6,29 +6,31 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Commands
 {
-    public record AddPatientByPatientCommand(string AccountId, PatientForCreateDTO Patient) : IRequest<PatientDTO>;
-    public class AddPatientByPatientHandler : IRequestHandler<AddPatientByPatientCommand, PatientDTO>
+    public record AddPatientByPatientCommand(string AccountId, PatientForCreateDTO Patient) : IRequest<PatientDTO>
     {
-        private readonly IPatientRepository _repository;
-        private readonly IMapper _mapper;
-
-        public AddPatientByPatientHandler(IPatientRepository repository, IMapper mapper)
+        public class AddPatientByPatientHandler : IRequestHandler<AddPatientByPatientCommand, PatientDTO>
         {
-            _repository = repository;
-            _mapper = mapper;
-        }
+            private readonly IPatientRepository _repository;
+            private readonly IMapper _mapper;
 
-        public async Task<PatientDTO> Handle(AddPatientByPatientCommand request, CancellationToken cancellationToken)
-        {
-            if (request.Patient == null)
-                return null;
+            public AddPatientByPatientHandler(IPatientRepository repository, IMapper mapper)
+            {
+                _repository = repository;
+                _mapper = mapper;
+            }
 
-            var patient = _mapper.Map<Patient>(request.Patient);
-            patient.AccountId = request.AccountId;
-            patient.isLinkedToAccount = true;
-            await _repository.InsertAsync(patient, cancellationToken);
+            public async Task<PatientDTO> Handle(AddPatientByPatientCommand request, CancellationToken cancellationToken)
+            {
+                if (request.Patient == null)
+                    return null;
 
-            return _mapper.Map<PatientDTO>(patient);
+                var patient = _mapper.Map<Patient>(request.Patient);
+                patient.AccountId = request.AccountId;
+                patient.IsLinkedToAccount = true;
+                await _repository.InsertAsync(patient, cancellationToken);
+
+                return _mapper.Map<PatientDTO>(patient);
+            }
         }
     }
 }

@@ -6,28 +6,30 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Commands
 {
-    public record AddPatientByReceptionistCommand(PatientForCreateDTO Patient) : IRequest<PatientDTO>;
-    public class AddPatientByReceptionistHandler : IRequestHandler<AddPatientByReceptionistCommand, PatientDTO>
+    public record AddPatientByReceptionistCommand(PatientForCreateDTO Patient) : IRequest<PatientDTO>
     {
-        private readonly IPatientRepository _repository;
-        private readonly IMapper _mapper;
-
-        public AddPatientByReceptionistHandler(IPatientRepository repository, IMapper mapper)
+        public class AddPatientByReceptionistHandler : IRequestHandler<AddPatientByReceptionistCommand, PatientDTO>
         {
-            _repository = repository;
-            _mapper = mapper;
-        }
+            private readonly IPatientRepository _repository;
+            private readonly IMapper _mapper;
 
-        public async Task<PatientDTO> Handle(AddPatientByReceptionistCommand request, CancellationToken cancellationToken)
-        {
-            if (request.Patient == null)
-                return null;
+            public AddPatientByReceptionistHandler(IPatientRepository repository, IMapper mapper)
+            {
+                _repository = repository;
+                _mapper = mapper;
+            }
 
-            var patient = _mapper.Map<Patient>(request.Patient);
-            patient.isLinkedToAccount = false;
-            await _repository.InsertAsync(patient, cancellationToken);
+            public async Task<PatientDTO> Handle(AddPatientByReceptionistCommand request, CancellationToken cancellationToken)
+            {
+                if (request.Patient == null)
+                    return null;
 
-            return _mapper.Map<PatientDTO>(patient);
+                var patient = _mapper.Map<Patient>(request.Patient);
+                patient.IsLinkedToAccount = false;
+                await _repository.InsertAsync(patient, cancellationToken);
+
+                return _mapper.Map<PatientDTO>(patient);
+            }
         }
     }
 }

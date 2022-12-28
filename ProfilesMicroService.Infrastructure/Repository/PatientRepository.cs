@@ -20,7 +20,7 @@ namespace ProfilesMicroService.Application.Services
 
         public async Task<IEnumerable<Patient>> GetAllWithoutAccountAsync(CancellationToken cancellationToken)
         {
-            return await _dbContext.Patients.Where(r => !r.isLinkedToAccount).ToListAsync(cancellationToken);
+            return await _dbContext.Patients.Where(r => !r.IsLinkedToAccount).ToListAsync(cancellationToken);
         }
 
         public async Task<Patient> GetByIdAsync(string id, CancellationToken cancellationToken)

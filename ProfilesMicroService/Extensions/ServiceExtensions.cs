@@ -45,7 +45,7 @@ namespace ProfilesMicroService.Api.Extensions
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<IReceptionistService, ProfileService>();
             services.AddScoped<IDoctorService, DoctorService>();
-            services.AddMediatR(typeof(Program));
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
             services.AddAutoMapper(typeof(MappingProfile));
         }
 

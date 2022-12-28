@@ -1,5 +1,4 @@
 ﻿using ProfilesMicroService.Application.DTO.Patient;
-using ProfilesMicroService.Domain.Entities.Enums;
 
 namespace ProfilesMicroService.Application.Services.Abstractions
 {

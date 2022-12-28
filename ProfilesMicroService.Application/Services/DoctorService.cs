@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using ProfilesMicroService.Application.DTO.Patient;
 using ProfilesMicroService.Application.Services.Abstractions;
-using ProfilesMicroService.Domain.Entities.Enums;
 using ProfilesMicroService.Domain.Entities.Models;
-using ProfilesMicroService.Infrastructure;
 using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.Services
@@ -73,7 +70,7 @@ namespace ProfilesMicroService.Application.Services
             return _mapper.Map<DoctorDTO>(doctor);
         }
 
-        public async Task<List<DoctorDTO>> GetAsync() 
+        public async Task<List<DoctorDTO>> GetAsync()
             => _mapper.Map<List<DoctorDTO>>(await _doctorRepository.GetAllAsync());
 
         public async Task<DoctorDTO> GetByIdAsync(string id)

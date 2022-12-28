@@ -1,5 +1,4 @@
 ﻿using ProfilesMicroService.Domain.Entities.Models;
-using System.Threading;
 
 namespace ProfilesMicroService.Infrastructure.Repository.Abstractions
 {

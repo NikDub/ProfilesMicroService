@@ -5,19 +5,21 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Queries
 {
-    public record GetPatientByIdQuery(string Id) : IRequest<PatientDTO>;
-    public class GetPatientByIdHandler : IRequestHandler<GetPatientByIdQuery, PatientDTO>
+    public record GetPatientByIdQuery(string Id) : IRequest<PatientDTO>
     {
-        private readonly IPatientRepository _repository;
-        private readonly IMapper _mapper;
-
-        public GetPatientByIdHandler(IPatientRepository repository, IMapper mapper)
+        public class GetPatientByIdHandler : IRequestHandler<GetPatientByIdQuery, PatientDTO>
         {
-            _repository = repository;
-            _mapper = mapper;
-        }
+            private readonly IPatientRepository _repository;
+            private readonly IMapper _mapper;
 
-        public async Task<PatientDTO> Handle(GetPatientByIdQuery request, CancellationToken cancellationToken) =>
-            _mapper.Map<PatientDTO>(await _repository.GetByIdAsync(request.Id, cancellationToken));
+            public GetPatientByIdHandler(IPatientRepository repository, IMapper mapper)
+            {
+                _repository = repository;
+                _mapper = mapper;
+            }
+
+            public async Task<PatientDTO> Handle(GetPatientByIdQuery request, CancellationToken cancellationToken) =>
+                _mapper.Map<PatientDTO>(await _repository.GetByIdAsync(request.Id, cancellationToken));
+        }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using ProfilesMicroService.Application.DTO.Receptionist;
 using ProfilesMicroService.Application.Services.Abstractions;
 using ProfilesMicroService.Domain.Entities.Models;
-using ProfilesMicroService.Infrastructure;
 using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.Services

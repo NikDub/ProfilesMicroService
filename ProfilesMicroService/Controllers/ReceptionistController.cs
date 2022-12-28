@@ -37,7 +37,7 @@ namespace ProfilesMicroService.Api.Controllers
         public async Task<IActionResult> Get(string id)
         {
             var profile = await _profileService.GetByIdAsync(id);
-            if(profile == null)
+            if (profile == null)
                 return NotFound();
 
             return Ok(profile);
