@@ -1,7 +1,6 @@
-﻿namespace ProfilesMicroService.Domain.Entities.Models
+﻿namespace ProfilesMicroService.Domain.Entities.Models;
+
+public class Receptionist : BaseProfile
 {
-    public class Receptionist : BaseProfile
-    {
-        public string OfficeId { get; set; }
-    }
+    public string OfficeId { get; set; }
 }

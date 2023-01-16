@@ -1,13 +1,12 @@
-﻿namespace ProfilesMicroService.Domain.Entities.Enums
+﻿namespace ProfilesMicroService.Domain.Entities.Enums;
+
+public enum StatusEnum
 {
-    public enum StatusEnum
-    {
-        AtWork,
-        OnVacation,
-        SickDay,
-        SickLeave,
-        SelfIsolation,
-        LeaveWithoutPay,
-        Inactive
-    }
+    AtWork,
+    OnVacation,
+    SickDay,
+    SickLeave,
+    SelfIsolation,
+    LeaveWithoutPay,
+    Inactive
 }

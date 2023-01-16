@@ -11,16 +11,16 @@ using ProfilesMicroService.Infrastructure;
 
 namespace ProfilesMicroService.Api.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20221208105510_init")]
-    partial class init
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20230113100054_WhatHappend")]
+    partial class WhatHappend
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -97,6 +97,9 @@ namespace ProfilesMicroService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsLinkedToAccount")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -151,7 +154,7 @@ namespace ProfilesMicroService.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuss");
+                    b.ToTable("Status");
 
                     b.HasData(
                         new
