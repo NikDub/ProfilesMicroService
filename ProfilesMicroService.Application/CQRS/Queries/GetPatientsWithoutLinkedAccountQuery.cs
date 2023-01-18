@@ -6,30 +6,30 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Queries;
 
-public record GetPatientWithoutAccountQuery(PatientForCreateDto Patient) : IRequest<IEnumerable<PatientDto>>
+public record GetPatientsWithoutLinkedAccountQuery(PatientForMatchDto Patient) : IRequest<IEnumerable<PatientDto>>
 {
     public class
-        GetPatientWithoutAccountHandler : IRequestHandler<GetPatientWithoutAccountQuery, IEnumerable<PatientDto>>
+        GetPatientsWithoutLinkedAccountHandler : IRequestHandler<GetPatientsWithoutLinkedAccountQuery, IEnumerable<PatientDto>>
     {
         private readonly IMapper _mapper;
         private readonly IPatientRepository _repository;
 
-        public GetPatientWithoutAccountHandler(IPatientRepository repository, IMapper mapper)
+        public GetPatientsWithoutLinkedAccountHandler(IPatientRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PatientDto>> Handle(GetPatientWithoutAccountQuery request,
+        public async Task<IEnumerable<PatientDto>> Handle(GetPatientsWithoutLinkedAccountQuery request,
             CancellationToken cancellationToken)
         {
-            var patientList = (await _repository.GetAllAsync(cancellationToken)).Select(patient =>
-                IsMatchPatient(patient, request.Patient) ? patient : null);
+            var patientList = (await _repository.GetAllWithoutAccountAsync(cancellationToken))
+                .Where(patient => IsMatchPatient(patient, request.Patient));
 
-            return _mapper.Map<List<PatientDto>>(patientList);
+            return _mapper.Map<IEnumerable<PatientDto>>(patientList);
         }
 
-        private bool IsMatchPatient(Patient patient, PatientForCreateDto requestPatient)
+        private bool IsMatchPatient(Patient patient, PatientForMatchDto requestPatient)
         {
             var countCoefficient = 0;
             if (IsEquals(patient.FirstName, requestPatient.FirstName))

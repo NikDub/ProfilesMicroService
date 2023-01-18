@@ -37,9 +37,9 @@ public class PatientsController : ControllerBase
 
     [HttpPost("profile/check")]
     [Authorize(Roles = nameof(UserRole.Patient))]
-    public async Task<IActionResult> GetProfileWithoutAccount([FromBody] PatientForCreateDto model)
+    public async Task<IActionResult> FindMatchedPatientProfiles([FromBody] PatientForMatchDto model)
     {
-        var patientList = await _mediator.Send(new GetPatientWithoutAccountQuery(model));
+        var patientList = await _mediator.Send(new GetPatientsWithoutLinkedAccountQuery(model));
         return Ok(patientList);
     }
 
