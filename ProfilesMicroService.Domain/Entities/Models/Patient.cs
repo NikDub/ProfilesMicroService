@@ -1,9 +1,8 @@
-﻿namespace ProfilesMicroService.Domain.Entities.Models
+﻿namespace ProfilesMicroService.Domain.Entities.Models;
+
+public class Patient : BaseProfile
 {
-    public class Patient : BaseProfile
-    {
-        public DateTime DateOfBirth { get; set; }
-        public string AccountPhoneNumber { get; set; }
-        public bool IsLinkedToAccount { get; set; } = false;
-    }
+    public DateTime DateOfBirth { get; set; }
+    public string AccountPhoneNumber { get; set; }
+    public bool IsLinkedToAccount { get; set; } = false;
 }

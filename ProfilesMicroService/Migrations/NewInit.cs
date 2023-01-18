@@ -5,21 +5,21 @@
 namespace ProfilesMicroService.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class newInit : Migration
+    public partial class NewInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Doctors_Statuss_StatusId",
+                name: "FK_Doctors_Status_StatusId",
                 table: "Doctors");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Statuss",
-                table: "Statuss");
+                name: "PK_Status",
+                table: "Status");
 
             migrationBuilder.RenameTable(
-                name: "Statuss",
+                name: "Status",
                 newName: "Status");
 
             migrationBuilder.AddColumn<bool>(
@@ -60,18 +60,18 @@ namespace ProfilesMicroService.Api.Migrations
 
             migrationBuilder.RenameTable(
                 name: "Status",
-                newName: "Statuss");
+                newName: "Status");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_Statuss",
-                table: "Statuss",
+                name: "PK_Status",
+                table: "Status",
                 column: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Doctors_Statuss_StatusId",
+                name: "FK_Doctors_Status_StatusId",
                 table: "Doctors",
                 column: "StatusId",
-                principalTable: "Statuss",
+                principalTable: "Status",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

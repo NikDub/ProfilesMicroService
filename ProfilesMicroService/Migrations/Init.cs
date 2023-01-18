@@ -7,7 +7,7 @@
 namespace ProfilesMicroService.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,7 +46,7 @@ namespace ProfilesMicroService.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Statuss",
+                name: "Status",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
@@ -54,7 +54,7 @@ namespace ProfilesMicroService.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Statuss", x => x.Id);
+                    table.PrimaryKey("PK_Status", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,15 +78,15 @@ namespace ProfilesMicroService.Api.Migrations
                 {
                     table.PrimaryKey("PK_Doctors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Doctors_Statuss_StatusId",
+                        name: "FK_Doctors_Status_StatusId",
                         column: x => x.StatusId,
-                        principalTable: "Statuss",
+                        principalTable: "Status",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Statuss",
+                table: "Status",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -118,7 +118,7 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Receptionists");
 
             migrationBuilder.DropTable(
-                name: "Statuss");
+                name: "Status");
         }
     }
 }

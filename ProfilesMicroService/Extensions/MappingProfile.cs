@@ -1,25 +1,31 @@
 ﻿using AutoMapper;
-using ProfilesMicroService.Application.DTO.Patient;
-using ProfilesMicroService.Application.DTO.Receptionist;
+using ProfilesMicroService.Application.Dto;
+using ProfilesMicroService.Application.Dto.Doctor;
+using ProfilesMicroService.Application.Dto.Patient;
+using ProfilesMicroService.Application.Dto.Receptionist;
 using ProfilesMicroService.Domain.Entities.Models;
 
-namespace ProfilesMicroService.Api.Extensions
+namespace ProfilesMicroService.Api.Extensions;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<ReceptionistDTO, Receptionist>().ReverseMap();
-            CreateMap<ReceptionistForCreateDTO, Receptionist>().ReverseMap();
-            CreateMap<ReceptionistForUpdateDTO, Receptionist>().ReverseMap();
+        CreateMap<ReceptionistDto, Receptionist>().ReverseMap();
+        CreateMap<ReceptionistForCreateDto, Receptionist>().ReverseMap();
+        CreateMap<ReceptionistForUpdateDto, Receptionist>().ReverseMap();
 
-            CreateMap<PatientDTO, Patient>().ReverseMap();
-            CreateMap<PatientForCreateDTO, Patient>().ReverseMap();
-            CreateMap<PatientForUpdateDTO, Patient>().ReverseMap();
+        CreateMap<PatientDto, Patient>().ReverseMap();
+        CreateMap<PatientForCreateDto, Patient>().ReverseMap();
+        CreateMap<PatientForUpdateDto, Patient>().ReverseMap();
 
-            CreateMap<DoctorDTO, Doctor>().ReverseMap();
-            CreateMap<DoctorForCreateDTO, Doctor>().ReverseMap();
-            CreateMap<DoctorForUpdateDTO, Doctor>().ReverseMap();
-        }
+        CreateMap<DoctorDto, Doctor>()
+            .ForMember(r => r.SpecializationId, t => t.MapFrom(r => r.Specialization.Id))
+            .ForMember(r => r.SpecializationName, t => t.MapFrom(r => r.Specialization.Name))
+            .ReverseMap();
+        CreateMap<DoctorForCreateDto, Doctor>().ReverseMap();
+        CreateMap<DoctorForUpdateDto, Doctor>().ReverseMap();
+
+        CreateMap<StatusDto, Status>().ReverseMap();
     }
 }

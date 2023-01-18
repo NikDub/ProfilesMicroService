@@ -1,25 +1,26 @@
 ﻿using AutoMapper;
 using MediatR;
-using ProfilesMicroService.Application.DTO.Patient;
+using ProfilesMicroService.Application.Dto.Patient;
 using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
-namespace ProfilesMicroService.Application.CQRS.Queries
+namespace ProfilesMicroService.Application.CQRS.Queries;
+
+public record GetPatientByAccountIdQuery(string AccountId) : IRequest<PatientDto>
 {
-    public record GetPatientByAccountIdQuery(string AccountId) : IRequest<PatientDTO>
+    public class GetPatientByAccountIdHandler : IRequestHandler<GetPatientByAccountIdQuery, PatientDto>
     {
-        public class GetPatientByAccountIdHandler : IRequestHandler<GetPatientByAccountIdQuery, PatientDTO>
+        private readonly IMapper _mapper;
+        private readonly IPatientRepository _repository;
+
+        public GetPatientByAccountIdHandler(IPatientRepository repository, IMapper mapper)
         {
-            private readonly IPatientRepository _repository;
-            private readonly IMapper _mapper;
+            _repository = repository;
+            _mapper = mapper;
+        }
 
-            public GetPatientByAccountIdHandler(IPatientRepository repository, IMapper mapper)
-            {
-                _repository = repository;
-                _mapper = mapper;
-            }
-
-            public async Task<PatientDTO> Handle(GetPatientByAccountIdQuery request, CancellationToken cancellationToken) =>
-                _mapper.Map<PatientDTO>(await _repository.GetByIdAsync(request.AccountId, cancellationToken));
+        public async Task<PatientDto> Handle(GetPatientByAccountIdQuery request, CancellationToken cancellationToken)
+        {
+            return _mapper.Map<PatientDto>(await _repository.GetByIdAsync(request.AccountId, cancellationToken));
         }
     }
 }

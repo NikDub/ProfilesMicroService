@@ -1,13 +1,12 @@
-﻿using ProfilesMicroService.Application.DTO.Receptionist;
+﻿using ProfilesMicroService.Application.Dto.Receptionist;
 
-namespace ProfilesMicroService.Application.Services.Abstractions
+namespace ProfilesMicroService.Application.Services.Abstractions;
+
+public interface IReceptionistService
 {
-    public interface IReceptionistService
-    {
-        Task<ReceptionistDTO> CreateAsync(ReceptionistForCreateDTO model);
-        Task<bool> DeleteAsync(string id);
-        Task<ReceptionistDTO> UpdateAsync(string id, ReceptionistForUpdateDTO model);
-        Task<List<ReceptionistDTO>> GetAsync();
-        Task<ReceptionistDTO> GetByIdAsync(string id);
-    }
+    Task<ReceptionistDto> CreateAsync(ReceptionistForCreateDto model);
+    Task<bool> DeleteAsync(string id);
+    Task<ReceptionistDto> UpdateAsync(string id, ReceptionistForUpdateDto model);
+    Task<List<ReceptionistDto>> GetAsync();
+    Task<ReceptionistDto> GetByIdAsync(string id);
 }

@@ -11,9 +11,9 @@ using ProfilesMicroService.Infrastructure;
 
 namespace ProfilesMicroService.Api.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20221228121026_newInit")]
-    partial class newInit
+    partial class NewInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
