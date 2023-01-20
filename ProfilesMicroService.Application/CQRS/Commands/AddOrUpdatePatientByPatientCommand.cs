@@ -34,7 +34,7 @@ public record AddOrUpdatePatientByPatientCommand(PatientForCreateDto Patient) : 
             }
 
             _mapper.Map(patient, request.Patient);
-            _repository.UpdateAsync(patient, cancellationToken);
+            await _repository.UpdateAsync(patient, cancellationToken);
             return _mapper.Map<PatientDto>(patient);
         }
     }
