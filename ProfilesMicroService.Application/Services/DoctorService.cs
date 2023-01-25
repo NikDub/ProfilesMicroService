@@ -21,7 +21,7 @@ public class DoctorService : IDoctorService
         _doctorRepository = doctorRepository;
         _statusRepository = statusRepository;
         _mapper = mapper;
-        _endPoint = bus.GetSendEndpoint(new Uri(configuration.GetValue<string>("RabbitMQ:Uri") + configuration.GetValue<string>("RabbitMQ:QueueName:Producer:Profile"))).GetAwaiter().GetResult();
+        _endPoint = bus.GetSendEndpoint(new Uri(configuration.GetValue<string>("RabbitMQ:Uri") + configuration.GetValue<string>("RabbitMQ:QueueName:Producer:Profile:Doctor"))).GetAwaiter().GetResult();
     }
 
     public async Task<DoctorDto> ChangeStatusAsync(Guid id, string status)

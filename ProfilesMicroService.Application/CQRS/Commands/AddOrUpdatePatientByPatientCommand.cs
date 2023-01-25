@@ -21,7 +21,7 @@ public record AddOrUpdatePatientByPatientCommand(PatientForCreateDto Patient) : 
         {
             _repository = repository;
             _mapper = mapper;
-            _endPoint = bus.GetSendEndpoint(new Uri(configuration.GetValue<string>("RabbitMQ:Uri") + configuration.GetValue<string>("RabbitMQ:QueueName:Producer:Profile"))).GetAwaiter().GetResult();
+            _endPoint = bus.GetSendEndpoint(new Uri(configuration.GetValue<string>("RabbitMQ:Uri") + configuration.GetValue<string>("RabbitMQ:QueueName:Producer:Profile:Patient"))).GetAwaiter().GetResult();
         }
 
         public async Task<PatientDto> Handle(AddOrUpdatePatientByPatientCommand request,
@@ -40,7 +40,7 @@ public record AddOrUpdatePatientByPatientCommand(PatientForCreateDto Patient) : 
 
             _mapper.Map(patient, request.Patient);
             await _repository.UpdateAsync(patient, cancellationToken);
-            var message = new DoctorMessage
+            var message = new PatientMessage
             {
                 Id = patient.Id,
                 FirstName = request.Patient.FirstName,

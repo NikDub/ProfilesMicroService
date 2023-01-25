@@ -27,5 +27,5 @@ public class DoctorForUpdateDto
 
     [Required] public Guid OfficeId { get; set; }
 
-    [Required] public Status Status { get; set; }
+    [Required] public StatusDto Status { get; set; }
 }
