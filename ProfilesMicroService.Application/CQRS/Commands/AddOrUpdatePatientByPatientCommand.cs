@@ -42,7 +42,7 @@ public record AddOrUpdatePatientByPatientCommand(PatientForCreateDto Patient) : 
             await _repository.UpdateAsync(patient, cancellationToken);
             var message = new DoctorMessage
             {
-                Id = patient.Id, //todo
+                Id = patient.Id,
                 FirstName = request.Patient.FirstName,
                 LastName = request.Patient.LastName,
                 MiddleName = request.Patient.MiddleName
