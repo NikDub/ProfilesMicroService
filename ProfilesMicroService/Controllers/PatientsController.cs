@@ -54,7 +54,7 @@ public class PatientsController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize(Roles = $"{nameof(UserRole.Patient)},{nameof(UserRole.Receptionist)}")]
-    public async Task<IActionResult> Put(string id, [FromBody] PatientForUpdateDto model)
+    public async Task<IActionResult> Put(Guid id, [FromBody] PatientForUpdateDto model)
     {
         var result = await _mediator.Send(new UpdatePatientCommand(id, model));
         if (result == null)
@@ -84,7 +84,7 @@ public class PatientsController : ControllerBase
 
     [HttpDelete("{id}")]
     [Authorize(Roles = nameof(UserRole.Receptionist))]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         await _mediator.Send(new DeletePatientCommand(id));
         return NoContent();
@@ -93,7 +93,7 @@ public class PatientsController : ControllerBase
 
     [HttpGet("{id}")]
     [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Doctor)}")]
-    public async Task<IActionResult> Get(string id)
+    public async Task<IActionResult> Get(Guid id)
     {
         var value = await _mediator.Send(new GetPatientByIdQuery(id));
         if (value == null)

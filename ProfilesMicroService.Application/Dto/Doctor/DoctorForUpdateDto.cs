@@ -5,7 +5,7 @@ namespace ProfilesMicroService.Application.Dto.Doctor;
 
 public class DoctorForUpdateDto
 {
-    public string AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     [Required] public string FirstName { get; set; }
 
@@ -15,17 +15,17 @@ public class DoctorForUpdateDto
 
     [Required] public DateTime DateOfBirth { get; set; }
 
-    public string StatusId { get; set; }
+    public Guid StatusId { get; set; }
 
     [Required] public int CareerStartYear { get; set; }
 
     public string AccountPhoneNumber { get; set; }
 
-    [Required] public string SpecializationId { get; set; }
+    [Required] public Guid SpecializationId { get; set; }
 
     [Required] public string SpecializationName { get; set; }
 
-    [Required] public string OfficeId { get; set; }
+    [Required] public Guid OfficeId { get; set; }
 
     [Required] public Status Status { get; set; }
 }

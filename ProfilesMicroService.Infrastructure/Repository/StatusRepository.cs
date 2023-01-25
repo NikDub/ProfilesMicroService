@@ -18,7 +18,7 @@ public class StatusRepository : IStatusRepository
         return await _dbContext.Statuses.ToListAsync();
     }
 
-    public async Task<Status> GetByIdAsync(string id)
+    public async Task<Status> GetByIdAsync(Guid id)
     {
         return await _dbContext.Statuses.FindAsync(id);
     }

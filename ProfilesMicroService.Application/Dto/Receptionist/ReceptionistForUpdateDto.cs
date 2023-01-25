@@ -4,7 +4,7 @@ namespace ProfilesMicroService.Application.Dto.Receptionist;
 
 public class ReceptionistForUpdateDto
 {
-    public string AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     [Required] public string FirstName { get; set; }
 
@@ -12,5 +12,5 @@ public class ReceptionistForUpdateDto
 
     public string MiddleName { get; set; }
 
-    [Required] public string OfficeId { get; set; }
+    [Required] public Guid OfficeId { get; set; }
 }

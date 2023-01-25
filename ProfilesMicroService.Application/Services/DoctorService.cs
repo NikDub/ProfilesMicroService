@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
 using ProfilesMicroService.Application.Dto.Doctor;
 using ProfilesMicroService.Application.Services.Abstractions;
 using ProfilesMicroService.Domain.Entities.Models;
 using ProfilesMicroService.Infrastructure.Repository.Abstractions;
+using SharedModel;
 
 namespace ProfilesMicroService.Application.Services;
 
@@ -10,16 +13,18 @@ public class DoctorService : IDoctorService
 {
     private readonly IDoctorRepository _doctorRepository;
     private readonly IMapper _mapper;
+    private readonly ISendEndpoint _endPoint;
     private readonly IStatusRepository _statusRepository;
 
-    public DoctorService(IDoctorRepository doctorRepository, IStatusRepository statusRepository, IMapper mapper)
+    public DoctorService(IDoctorRepository doctorRepository, IStatusRepository statusRepository, IMapper mapper, IBus bus, IConfiguration configuration)
     {
         _doctorRepository = doctorRepository;
         _statusRepository = statusRepository;
         _mapper = mapper;
+        _endPoint = bus.GetSendEndpoint(new Uri(configuration.GetValue<string>("RabbitMQ:Uri") + configuration.GetValue<string>("RabbitMQ:QueueName:Producer:Profile"))).GetAwaiter().GetResult();
     }
 
-    public async Task<DoctorDto> ChangeStatusAsync(string id, string status)
+    public async Task<DoctorDto> ChangeStatusAsync(Guid id, string status)
     {
         var doctor = await _doctorRepository.GetByIdAsync(id);
         if (doctor == null)
@@ -45,7 +50,7 @@ public class DoctorService : IDoctorService
         return _mapper.Map<DoctorDto>(doctorMap);
     }
 
-    public async Task<bool> DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         var doctor = await _doctorRepository.GetByIdAsync(id);
 
@@ -56,7 +61,7 @@ public class DoctorService : IDoctorService
         return true;
     }
 
-    public async Task<DoctorDto> UpdateAsync(string id, DoctorForUpdateDto model)
+    public async Task<DoctorDto> UpdateAsync(Guid id, DoctorForUpdateDto model)
     {
         if (model == null)
             return null;
@@ -67,6 +72,14 @@ public class DoctorService : IDoctorService
 
         _mapper.Map(model, doctor);
         await _doctorRepository.SaveAsync();
+        var message = new DoctorMessage
+        {
+            Id = id, //todo
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            MiddleName = model.MiddleName
+        };
+        await _endPoint.Send(message);
         return _mapper.Map<DoctorDto>(doctor);
     }
 
@@ -76,7 +89,7 @@ public class DoctorService : IDoctorService
         return _mapper.Map<List<DoctorDto>>(temp);
     }
 
-    public async Task<DoctorDto> GetByIdAsync(string id)
+    public async Task<DoctorDto> GetByIdAsync(Guid id)
     {
         return _mapper.Map<DoctorDto>(await _doctorRepository.GetByIdAsync(id));
     }

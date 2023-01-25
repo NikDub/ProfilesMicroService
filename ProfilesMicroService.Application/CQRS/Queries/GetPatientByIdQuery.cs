@@ -5,7 +5,7 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Queries;
 
-public record GetPatientByIdQuery(string Id) : IRequest<PatientDto>
+public record GetPatientByIdQuery(Guid Id) : IRequest<PatientDto>
 {
     public class GetPatientByIdHandler : IRequestHandler<GetPatientByIdQuery, PatientDto>
     {

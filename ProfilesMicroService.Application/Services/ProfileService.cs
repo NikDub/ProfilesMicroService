@@ -27,7 +27,7 @@ public class ProfileService : IReceptionistService
         return _mapper.Map<ReceptionistDto>(receptionistMap);
     }
 
-    public async Task<bool> DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         var receptionist = await _receptionistRepository.GetByIdAsync(id);
 
@@ -38,7 +38,7 @@ public class ProfileService : IReceptionistService
         return true;
     }
 
-    public async Task<ReceptionistDto> UpdateAsync(string id, ReceptionistForUpdateDto model)
+    public async Task<ReceptionistDto> UpdateAsync(Guid id, ReceptionistForUpdateDto model)
     {
         if (model == null)
             return null;
@@ -57,7 +57,7 @@ public class ProfileService : IReceptionistService
         return _mapper.Map<List<ReceptionistDto>>(await _receptionistRepository.GetAllAsync());
     }
 
-    public async Task<ReceptionistDto> GetByIdAsync(string id)
+    public async Task<ReceptionistDto> GetByIdAsync(Guid id)
     {
         return _mapper.Map<ReceptionistDto>(await _receptionistRepository.GetByIdAsync(id));
     }

@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ProfilesMicroService.Application.Consumers;
 using ProfilesMicroService.Application.Services;
 using ProfilesMicroService.Application.Services.Abstractions;
 using ProfilesMicroService.Infrastructure;
@@ -54,6 +56,26 @@ public static class ServiceExtensions
         services.AddScoped<IDoctorService, DoctorService>();
         services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
         services.AddAutoMapper(typeof(MappingProfile));
+    }
+
+    public static void ConfigureMassTransit(this IServiceCollection services, IConfiguration configuration)
+    {
+
+        services.AddMassTransit(r =>
+        {
+            r.AddConsumer<SpecializationConsumer>();
+            r.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(new Uri(configuration.GetValue<string>("RabbitMQ:ConnectionStrings") ??
+                                 throw new NotImplementedException()));
+                cfg.ReceiveEndpoint(configuration.GetValue<string>("RabbitMQ:QueueName:Consumer:Specialization") ??
+                               throw new NotImplementedException(),
+                  e =>
+                  {
+                      e.ConfigureConsumer<SpecializationConsumer>(context);
+                  });
+            });
+        });
     }
 
     public static void ConfigureSwagger(this IServiceCollection services)

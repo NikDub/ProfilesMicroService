@@ -20,7 +20,7 @@ public record GetPatientByAccountIdQuery(string AccountId) : IRequest<PatientDto
 
         public async Task<PatientDto> Handle(GetPatientByAccountIdQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<PatientDto>(await _repository.GetByIdAsync(request.AccountId, cancellationToken));
+            return _mapper.Map<PatientDto>(await _repository.GetByIdAsync(Guid.Parse(request.AccountId), cancellationToken));
         }
     }
 }

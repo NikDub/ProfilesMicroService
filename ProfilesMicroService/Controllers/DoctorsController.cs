@@ -34,7 +34,7 @@ public class DoctorsController : Controller
 
     [HttpGet("{id}")]
     [Authorize(Roles = $"{nameof(UserRole.Patient)},{nameof(UserRole.Receptionist)},{nameof(UserRole.Doctor)}")]
-    public async Task<IActionResult> Get(string id)
+    public async Task<IActionResult> Get(Guid id)
     {
         var doctor = await _doctorService.GetByIdAsync(id);
         if (doctor == null)
@@ -54,7 +54,7 @@ public class DoctorsController : Controller
 
     [HttpPut("{id}")]
     [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Doctor)}")]
-    public async Task<IActionResult> Put(string id, [FromBody] DoctorForUpdateDto model)
+    public async Task<IActionResult> Put(Guid id, [FromBody] DoctorForUpdateDto model)
     {
         var doctor = await _doctorService.UpdateAsync(id, model);
         if (doctor == null)
@@ -64,7 +64,7 @@ public class DoctorsController : Controller
 
     [HttpPut("{id}/status/{status}")]
     [Authorize(Roles = nameof(UserRole.Receptionist))]
-    public async Task<IActionResult> PutStatus(string id, string status)
+    public async Task<IActionResult> PutStatus(Guid id, string status)
     {
         var doctor = await _doctorService.ChangeStatusAsync(id, status);
         if (doctor == null)

@@ -2,5 +2,5 @@
 
 public class Receptionist : BaseProfile
 {
-    public string OfficeId { get; set; }
+    public Guid OfficeId { get; set; }
 }
