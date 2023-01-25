@@ -74,7 +74,7 @@ public class DoctorService : IDoctorService
         await _doctorRepository.SaveAsync();
         var message = new DoctorMessage
         {
-            Id = id, //todo
+            Id = id,
             FirstName = model.FirstName,
             LastName = model.LastName,
             MiddleName = model.MiddleName
