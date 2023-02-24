@@ -6,10 +6,10 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Queries;
 
-public record GetPatientsWithoutLinkedAccountQuery(PatientForMatchDto Patient) : IRequest<IEnumerable<PatientDto>>
+public record GetPatientsWithoutLinkedAccountQuery(PatientForMatchDto Patient) : IRequest<PatientDto>
 {
     public class
-        GetPatientsWithoutLinkedAccountHandler : IRequestHandler<GetPatientsWithoutLinkedAccountQuery, IEnumerable<PatientDto>>
+        GetPatientsWithoutLinkedAccountHandler : IRequestHandler<GetPatientsWithoutLinkedAccountQuery, PatientDto>
     {
         private readonly IMapper _mapper;
         private readonly IPatientRepository _repository;
@@ -20,13 +20,13 @@ public record GetPatientsWithoutLinkedAccountQuery(PatientForMatchDto Patient) :
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PatientDto>> Handle(GetPatientsWithoutLinkedAccountQuery request,
+        public async Task<PatientDto> Handle(GetPatientsWithoutLinkedAccountQuery request,
             CancellationToken cancellationToken)
         {
             var patientList = (await _repository.GetAllWithoutAccountAsync(cancellationToken))
-                .Where(patient => IsMatchPatient(patient, request.Patient));
+                .FirstOrDefault(patient => IsMatchPatient(patient, request.Patient));
 
-            return _mapper.Map<IEnumerable<PatientDto>>(patientList);
+            return _mapper.Map<PatientDto>(patientList);
         }
 
         private bool IsMatchPatient(Patient patient, PatientForMatchDto requestPatient)

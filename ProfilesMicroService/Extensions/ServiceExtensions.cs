@@ -60,14 +60,13 @@ public static class ServiceExtensions
 
     public static void ConfigureMassTransit(this IServiceCollection services, IConfiguration configuration)
     {
-
+        var hostUri = new Uri(configuration.GetValue<string>("RabbitMQ:ConnectionStrings") ?? throw new NotImplementedException());
         services.AddMassTransit(r =>
         {
             r.AddConsumer<SpecializationConsumer>();
             r.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host(new Uri(configuration.GetValue<string>("RabbitMQ:ConnectionStrings") ??
-                                 throw new NotImplementedException()));
+                cfg.Host(hostUri);
                 cfg.ReceiveEndpoint(configuration.GetValue<string>("RabbitMQ:QueueName:Consumer:Specialization") ??
                                throw new NotImplementedException(),
                   e =>

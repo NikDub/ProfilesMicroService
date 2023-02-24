@@ -28,7 +28,7 @@ public class PatientsController : ControllerBase
         if (accountId == null)
             return BadRequest("You haven't account id");
 
-        var value = await _mediator.Send(new GetPatientByAccountIdQuery(accountId));
+        var value = await _mediator.Send(new GetPatientByAccountIdQuery(Guid.Parse(accountId)));
         if (value == null)
             return NotFound();
 

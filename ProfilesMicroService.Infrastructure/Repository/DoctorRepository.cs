@@ -21,7 +21,7 @@ public class DoctorRepository : IDoctorRepository
 
     public async Task<Doctor> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Doctors.FindAsync(id);
+        return await _dbContext.Doctors.FirstOrDefaultAsync(r => r.AccountId == id);
     }
 
     public async Task InsertAsync(Doctor doctor)
@@ -38,12 +38,14 @@ public class DoctorRepository : IDoctorRepository
 
     public async Task UpdateSpecializationNameAsync(Guid specializationId, string specializationName)
     {
-        var doctorList = await _dbContext.Doctors.Where(r=>r.SpecializationId == specializationId).ToListAsync();
-        doctorList.ForEach(r => 
+        var doctorList = await _dbContext.Doctors.Where(r => r.SpecializationId == specializationId).ToListAsync();
+
+        doctorList.ForEach(r =>
         {
             r.SpecializationName = specializationName;
             _dbContext.Entry(r).State = EntityState.Modified;
         });
+
         await _dbContext.SaveChangesAsync();
     }
 

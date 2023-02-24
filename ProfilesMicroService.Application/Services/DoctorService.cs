@@ -44,8 +44,11 @@ public class DoctorService : IDoctorService
     {
         if (model == null)
             return null;
-
+        var Status = await _statusRepository.GetByNameAsync(model.Status.Name);
+        if (Status == null)
+            return null;
         var doctorMap = _mapper.Map<Doctor>(model);
+        doctorMap.StatusId = Status.Id;
         await _doctorRepository.InsertAsync(doctorMap);
         return _mapper.Map<DoctorDto>(doctorMap);
     }
@@ -71,6 +74,7 @@ public class DoctorService : IDoctorService
             return null;
 
         _mapper.Map(model, doctor);
+        doctor.StatusId = model.Status.Id;
         await _doctorRepository.SaveAsync();
         var message = new DoctorMessage
         {

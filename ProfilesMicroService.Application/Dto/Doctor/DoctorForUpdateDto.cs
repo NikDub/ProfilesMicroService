@@ -15,8 +15,6 @@ public class DoctorForUpdateDto
 
     [Required] public DateTime DateOfBirth { get; set; }
 
-    public Guid StatusId { get; set; }
-
     [Required] public int CareerStartYear { get; set; }
 
     public string AccountPhoneNumber { get; set; }
