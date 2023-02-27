@@ -5,7 +5,7 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Queries;
 
-public record GetPatientByAccountIdQuery(string AccountId) : IRequest<PatientDto>
+public record GetPatientByAccountIdQuery(Guid AccountId) : IRequest<PatientDto>
 {
     public class GetPatientByAccountIdHandler : IRequestHandler<GetPatientByAccountIdQuery, PatientDto>
     {
@@ -20,7 +20,7 @@ public record GetPatientByAccountIdQuery(string AccountId) : IRequest<PatientDto
 
         public async Task<PatientDto> Handle(GetPatientByAccountIdQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<PatientDto>(await _repository.GetByIdAsync(request.AccountId, cancellationToken));
+            return _mapper.Map<PatientDto>(await _repository.GetByAccountIdAsync(request.AccountId, cancellationToken));
         }
     }
 }

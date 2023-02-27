@@ -5,9 +5,9 @@ namespace ProfilesMicroService.Application.Services.Abstractions;
 public interface IDoctorService
 {
     Task<DoctorDto> CreateAsync(DoctorForCreateDto model);
-    Task<DoctorDto> UpdateAsync(string id, DoctorForUpdateDto model);
-    Task<DoctorDto> ChangeStatusAsync(string id, string status);
+    Task<DoctorDto> UpdateAsync(Guid id, DoctorForUpdateDto model);
+    Task<DoctorDto> ChangeStatusAsync(Guid id, string status);
     Task<List<DoctorDto>> GetAsync();
-    Task<DoctorDto> GetByIdAsync(string id);
+    Task<DoctorDto> GetByIdAsync(Guid id);
     Task<List<DoctorDto>> GetDoctorsByStatusAsync(string status);
 }

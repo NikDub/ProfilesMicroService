@@ -19,9 +19,9 @@ public class DoctorRepository : IDoctorRepository
     }
 
 
-    public async Task<Doctor> GetByIdAsync(string id)
+    public async Task<Doctor> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Doctors.FindAsync(id);
+        return await _dbContext.Doctors.FirstOrDefaultAsync(r => r.AccountId == id);
     }
 
     public async Task InsertAsync(Doctor doctor)
@@ -36,7 +36,20 @@ public class DoctorRepository : IDoctorRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(string id)
+    public async Task UpdateSpecializationNameAsync(Guid specializationId, string specializationName)
+    {
+        var doctorList = await _dbContext.Doctors.Where(r => r.SpecializationId == specializationId).ToListAsync();
+
+        doctorList.ForEach(r =>
+        {
+            r.SpecializationName = specializationName;
+            _dbContext.Entry(r).State = EntityState.Modified;
+        });
+
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Guid id)
     {
         var doctor = await _dbContext.Doctors.FindAsync(id);
         if (doctor != null) _dbContext.Doctors.Remove(doctor);

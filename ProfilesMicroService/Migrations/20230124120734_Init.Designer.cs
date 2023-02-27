@@ -12,28 +12,28 @@ using ProfilesMicroService.Infrastructure;
 namespace ProfilesMicroService.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221228121026_newInit")]
-    partial class NewInit
+    [Migration("20230124120734_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Doctor", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
+                        .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<string>("AccountId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AccountPhoneNumber")
                         .HasColumnType("text");
@@ -55,20 +55,17 @@ namespace ProfilesMicroService.Api.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
-                    b.Property<string>("OfficeId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("OfficeId")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("SpecializationId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("SpecializationId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("SpecializationName")
                         .HasColumnType("text");
 
-                    b.Property<string>("StatusId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("StatusId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -79,13 +76,13 @@ namespace ProfilesMicroService.Api.Migrations
 
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Patient", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
+                        .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<string>("AccountId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AccountPhoneNumber")
                         .HasColumnType("text");
@@ -97,15 +94,15 @@ namespace ProfilesMicroService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsLinkedToAccount")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
-
-                    b.Property<bool>("isLinkedToAccount")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -114,13 +111,13 @@ namespace ProfilesMicroService.Api.Migrations
 
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Receptionist", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
+                        .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<string>("AccountId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -133,9 +130,8 @@ namespace ProfilesMicroService.Api.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
-                    b.Property<string>("OfficeId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("OfficeId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -144,9 +140,9 @@ namespace ProfilesMicroService.Api.Migrations
 
             modelBuilder.Entity("ProfilesMicroService.Domain.Entities.Models.Status", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
+                        .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<string>("Name")
@@ -154,42 +150,42 @@ namespace ProfilesMicroService.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Status");
+                    b.ToTable("Statuses");
 
                     b.HasData(
                         new
                         {
-                            Id = "242bb89f-149a-4cd0-b81f-55a378b8da3b",
+                            Id = new Guid("242bb89f-149a-4cd0-b81f-55a378b8da3b"),
                             Name = "AtWork"
                         },
                         new
                         {
-                            Id = "a6dee6ab-4edf-4006-8e2f-b8be6f842b86",
+                            Id = new Guid("a6dee6ab-4edf-4006-8e2f-b8be6f842b86"),
                             Name = "OnVacation"
                         },
                         new
                         {
-                            Id = "222ad367-3e96-41ad-b7e1-e6c3b31d408f",
+                            Id = new Guid("222ad367-3e96-41ad-b7e1-e6c3b31d408f"),
                             Name = "SickDay"
                         },
                         new
                         {
-                            Id = "7a55ff1b-2e82-4db5-abfb-046128e395e0",
+                            Id = new Guid("7a55ff1b-2e82-4db5-abfb-046128e395e0"),
                             Name = "SickLeave"
                         },
                         new
                         {
-                            Id = "b9877be3-1b84-4083-a464-fb2c6dfda87d",
+                            Id = new Guid("b9877be3-1b84-4083-a464-fb2c6dfda87d"),
                             Name = "SelfIsolation"
                         },
                         new
                         {
-                            Id = "ceb6bc1e-cc2b-43ae-8243-b73fb11a4d0f",
+                            Id = new Guid("ceb6bc1e-cc2b-43ae-8243-b73fb11a4d0f"),
                             Name = "LeaveWithoutPay"
                         },
                         new
                         {
-                            Id = "283f6717-6bbf-4b06-b960-2a2a6b727630",
+                            Id = new Guid("283f6717-6bbf-4b06-b960-2a2a6b727630"),
                             Name = "Inactive"
                         });
                 });

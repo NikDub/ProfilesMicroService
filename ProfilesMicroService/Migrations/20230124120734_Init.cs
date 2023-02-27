@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -16,10 +17,11 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     AccountPhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    AccountId = table.Column<string>(type: "text", nullable: true),
+                    IsLinkedToAccount = table.Column<bool>(type: "boolean", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: true)
@@ -33,9 +35,9 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Receptionists",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    OfficeId = table.Column<string>(type: "text", nullable: false),
-                    AccountId = table.Column<string>(type: "text", nullable: true),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    OfficeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: true)
@@ -46,30 +48,30 @@ namespace ProfilesMicroService.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Status",
+                name: "Statuses",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Status", x => x.Id);
+                    table.PrimaryKey("PK_Statuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Doctors",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    StatusId = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    StatusId = table.Column<Guid>(type: "uuid", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CareerStartYear = table.Column<int>(type: "integer", nullable: false),
                     AccountPhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    SpecializationId = table.Column<string>(type: "text", nullable: false),
+                    SpecializationId = table.Column<Guid>(type: "uuid", nullable: false),
                     SpecializationName = table.Column<string>(type: "text", nullable: true),
-                    OfficeId = table.Column<string>(type: "text", nullable: false),
-                    AccountId = table.Column<string>(type: "text", nullable: true),
+                    OfficeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     MiddleName = table.Column<string>(type: "text", nullable: true)
@@ -78,25 +80,25 @@ namespace ProfilesMicroService.Api.Migrations
                 {
                     table.PrimaryKey("PK_Doctors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Doctors_Status_StatusId",
+                        name: "FK_Doctors_Statuses_StatusId",
                         column: x => x.StatusId,
-                        principalTable: "Status",
+                        principalTable: "Statuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Status",
+                table: "Statuses",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { "222ad367-3e96-41ad-b7e1-e6c3b31d408f", "SickDay" },
-                    { "242bb89f-149a-4cd0-b81f-55a378b8da3b", "AtWork" },
-                    { "283f6717-6bbf-4b06-b960-2a2a6b727630", "Inactive" },
-                    { "7a55ff1b-2e82-4db5-abfb-046128e395e0", "SickLeave" },
-                    { "a6dee6ab-4edf-4006-8e2f-b8be6f842b86", "OnVacation" },
-                    { "b9877be3-1b84-4083-a464-fb2c6dfda87d", "SelfIsolation" },
-                    { "ceb6bc1e-cc2b-43ae-8243-b73fb11a4d0f", "LeaveWithoutPay" }
+                    { new Guid("222ad367-3e96-41ad-b7e1-e6c3b31d408f"), "SickDay" },
+                    { new Guid("242bb89f-149a-4cd0-b81f-55a378b8da3b"), "AtWork" },
+                    { new Guid("283f6717-6bbf-4b06-b960-2a2a6b727630"), "Inactive" },
+                    { new Guid("7a55ff1b-2e82-4db5-abfb-046128e395e0"), "SickLeave" },
+                    { new Guid("a6dee6ab-4edf-4006-8e2f-b8be6f842b86"), "OnVacation" },
+                    { new Guid("b9877be3-1b84-4083-a464-fb2c6dfda87d"), "SelfIsolation" },
+                    { new Guid("ceb6bc1e-cc2b-43ae-8243-b73fb11a4d0f"), "LeaveWithoutPay" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -118,7 +120,7 @@ namespace ProfilesMicroService.Api.Migrations
                 name: "Receptionists");
 
             migrationBuilder.DropTable(
-                name: "Status");
+                name: "Statuses");
         }
     }
 }

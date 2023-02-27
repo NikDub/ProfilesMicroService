@@ -4,7 +4,7 @@ namespace ProfilesMicroService.Application.Dto.Patient;
 
 public class PatientForUpdateDto
 {
-    public string AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     [Required] public string FirstName { get; set; }
 

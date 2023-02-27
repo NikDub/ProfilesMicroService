@@ -18,7 +18,7 @@ public class ReceptionistRepository : IReceptionistRepository
         return await _dbContext.Receptionists.ToListAsync();
     }
 
-    public async Task<Receptionist> GetByIdAsync(string id)
+    public async Task<Receptionist> GetByIdAsync(Guid id)
     {
         return await _dbContext.Receptionists.FindAsync(id);
     }
@@ -35,7 +35,7 @@ public class ReceptionistRepository : IReceptionistRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(string id)
+    public async Task DeleteAsync(Guid id)
     {
         var receptionist = await _dbContext.Receptionists.FindAsync(id);
         if (receptionist != null) _dbContext.Receptionists.Remove(receptionist);

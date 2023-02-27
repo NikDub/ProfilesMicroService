@@ -35,7 +35,7 @@ public class ReceptionistsController : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(string id)
+    public async Task<IActionResult> Get(Guid id)
     {
         var profile = await _profileService.GetByIdAsync(id);
         if (profile == null)
@@ -45,7 +45,7 @@ public class ReceptionistsController : Controller
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromBody] ReceptionistForUpdateDto model)
+    public async Task<IActionResult> Update(Guid id, [FromBody] ReceptionistForUpdateDto model)
     {
         var profile = await _profileService.UpdateAsync(id, model);
         if (profile == null)
@@ -55,7 +55,7 @@ public class ReceptionistsController : Controller
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         await _profileService.DeleteAsync(id);
         return NoContent();

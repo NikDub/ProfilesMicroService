@@ -3,7 +3,7 @@ using ProfilesMicroService.Infrastructure.Repository.Abstractions;
 
 namespace ProfilesMicroService.Application.CQRS.Commands;
 
-public record DeletePatientCommand(string Id) : IRequest
+public record DeletePatientCommand(Guid Id) : IRequest
 {
     public class DeletePatientHandler : IRequestHandler<DeletePatientCommand, Unit>
     {

@@ -7,12 +7,21 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="MassTransit" Version="8.0.11" />
     <PackageReference Include="MediatR" Version="11.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProfilesMicroService.Infrastructure\ProfilesMicroService.Infrastructure.csproj" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <Reference Include="SharedModel">
+      <HintPath>..\..\..\git\SharedModel\SharedModel\bin\Debug\net7.0\SharedModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
 </Project>
